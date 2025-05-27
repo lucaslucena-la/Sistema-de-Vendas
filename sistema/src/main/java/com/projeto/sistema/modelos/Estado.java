@@ -36,6 +36,10 @@ public class Estado  implements Serializable {
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
 	}
+	public static Estado get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	
