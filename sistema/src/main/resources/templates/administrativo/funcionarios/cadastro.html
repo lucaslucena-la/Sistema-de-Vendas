@@ -47,30 +47,71 @@ xmlns:layut="http://www.ultraq.net.nz/thmeLeaf/Layout">
 
     <div class="container">
         
-        <form  action="/salvarCidade" th:object="${cidade}" method="post">
-            <div class ="form-group" style="padding: 2px;">
-				
-				<label for="id">ID</label>
-                <input type="text "readonly = "true" class="form-control" id="nome" th:field="*{id}" >
-				
-                <label for="nome">Nome da Cidade</label>
-                <input type="text" required class="form-control" id="nome" th:field="*{nome}" >
-				
-				
-                <label>CEP:</label>
-                <input type="text" class="form-control" id="cep" th:field="*{cep}">
-				
-				<label>Estado:</label>
-				<select th:field = "*{estado}" class="form-control">
-					<option th:each="est: ${listaEstados}" th:value = "${est.id}" th:text = "${est.nome}"></option>
-				</select>
-				
-				
-				
-            </div>
+        <form  action="/salvarFuncionario" th:object="${funcionario}" method="post">
+			<div class="form-group" style="padding: 2px;">
+
+			    <div class="row">
+			        <div class="col-md">
+			            <label for="id">ID:</label>
+			            <input type="text" readonly class="form-control" id="id" th:field="*{id}">
+			        </div>
+			        <div class="col-md">
+			            <label for="nome">Nome do Funcionário:</label>
+			            <input type="text" required class="form-control" id="nome" th:field="*{nome}">
+			        </div>
+			        <div class="col-md">
+			            <label for="cpf">CPF:</label>
+			            <input type="text" required class="form-control" id="cpf" th:field="*{cpf}">
+			        </div>
+			    </div>
+
+			    <div class="row">
+			        <div class="col-md">
+			            <label for="telefone">Telefone:</label>
+			            <input type="text" required class="form-control" id="telefone" th:field="*{telefone}">
+			        </div>
+			        <div class="col-md">
+			            <label for="endereco">Endereço:</label>
+			            <input type="text" required class="form-control" id="endereco" th:field="*{endereco}">
+			        </div>
+			        <div class="col-md">
+			            <label for="numero">Número da casa:</label>
+			            <input type="text" required class="form-control" id="numero" th:field="*{numero}">
+			        </div>
+			    </div>
+
+			    <div class="row">
+			        <div class="col-md">
+			            <label for="bairro">Bairro:</label>
+			            <input type="text" required class="form-control" id="bairro" th:field="*{bairro}">
+			        </div>
+			        <div class="col-md">
+			            <label for="email">Email:</label>
+			            <input type="text" required class="form-control" id="email" th:field="*{email}">
+			        </div>
+			        <div class="col-md">
+			            <label for="funcao">Função:</label>
+			            <input type="text" required class="form-control" id="funcao" th:field="*{funcao}">
+			        </div>
+			    </div>
+
+				<div class="row">
+			        <div class="col-md">
+			            <label for="cidade">Cidade:</label>
+						<select th:field="*{cidade}" class="form-control" id="cidade" required>
+						    <option value="">Selecione...</option> <!-- opção padrão vazia -->
+						    <option th:each="est : ${listaCidades}" th:value="${est.id}" th:text="${est.nome}"></option>
+						</select>
+
+			        </div>
+			    </div>
+
+
+			</div>
+
            
             <a><button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Salvar</button> </a>
-            <a href="/listarCidade"  class="btn btn-success"> <i class="fa-solid fa-list"></i>Listar</button> </a>
+            <a href="/listarFuncionario"  class="btn btn-success"> <i class="fa-solid fa-list"></i>Listar</button> </a>
             <a href="/administrativo"  class="btn btn-danger"> <i class="fa-solid fa-share"></i>Voltar</button> </a>
             </form>
         
@@ -91,7 +132,8 @@ xmlns:layut="http://www.ultraq.net.nz/thmeLeaf/Layout">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/0.9.0/jquery.mask.min.js" integrity="sha512-oJCa6FS2+zO3EitUSj+xeiEN9UTr+AjqlBZO58OPadb2RfqwxHpjTU8ckIC8F4nKvom7iru2s8Jwdo+Z8zm0Vg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
 	<script>
 		$(document).ready(function(){
-	  		$('#cep').mask('99.999-999');
+	  		$('#cpf').mask('000.000.000-00');
+	  		$('#telefone').mask('(00) 0 0000-0000');
 		});
   	</script>
 

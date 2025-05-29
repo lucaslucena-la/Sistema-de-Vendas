@@ -21,7 +21,7 @@ xmlns:layut="http://www.ultraq.net.nz/thmeLeaf/Layout">
   <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <img src="logoteste.png" width="30" height="30" class="d-inline-block align-top" alt="">
+		<img src="/img/logoteste.png" width="50" height="50" class="d-inline-block align-top" alt="Logo">
         <a class="navbar-brand" href="#">Sistema de Vendas</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,7 +48,7 @@ xmlns:layut="http://www.ultraq.net.nz/thmeLeaf/Layout">
     <div class="container">
         
         <form  action="/salvarEstado" th:object="${estado}" method="post">
-            <div style="padding: 2px;">
+            <div class ="form-group" style="padding: 2px;">
 				
 				<label for="id">ID</label>
                 <input type="text "readonly = "true" class="form-control" id="nome" th:field="*{id}" >
