@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table (name = "produto")
 public class Produto  implements Serializable {
 	private static final long serialVersionUTD = 1L;
 	@Id
