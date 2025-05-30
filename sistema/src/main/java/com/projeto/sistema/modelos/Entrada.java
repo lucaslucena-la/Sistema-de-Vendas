@@ -18,7 +18,7 @@ public class Entrada  implements Serializable {
 	
 	private String obs;
 	private Double valorTotal=0.00;
-	private Double quantidadeTtotal=0.00;
+	private Double quantidadeTotal=0.00;
 	private Date dataEntrada = new Date();
 	@ManyToOne
 	private Fornecedor fornecedor;
@@ -44,10 +44,10 @@ public class Entrada  implements Serializable {
 		this.valorTotal = valorTotal;
 	}
 	public Double getQuantidadeTotal() {
-		return quantidadeTtotal;
+		return quantidadeTotal;
 	}
 	public void setQuantidadeTotal(Double quantidadeTotal) {
-		this.quantidadeTtotal = quantidadeTotal;
+		this.quantidadeTotal = quantidadeTotal;
 	}
 	public Date getDataEntrada() {
 		return dataEntrada;

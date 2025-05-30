@@ -51,22 +51,24 @@ xmlns:layut="http://www.ultraq.net.nz/thmeLeaf/Layout">
 		        <thead>
 		            <tr>
 		                <th>ID</th>
-		                <th>Nome</th>
-		                <th>CEP	</th>
-		                <th>Estado	</th>
-		                <th>Ação</th>
+		                <th>Nome Fornecedor</th>
+		                <th>Nome Funcionario	</th>
+		                <th>Data Entrada	</th>
+		                <th>Valor Tota</th>
+		                <th>Opções</th>
 		            </tr>
 		        </thead>
 
 		        <tbody >
-		            <tr th:each="cidade : ${listaCidades}">
-		                <td th:text="${cidade.id}"></td>
-		                <td th:text="${cidade.nome}"></td>
-		                <td th:text="${cidade.cep}"></td>
-		                <td th:text="${cidade.estado.nome}"></td>
+		            <tr th:each="entrada : ${listaEntradas}">
+		                <td th:text="${entrada.id}"></td>
+		                <td th:text="${entrada.fornecedor.nome}"></td>
+		                <td th:text="${entrada.funcionario.nome}"></td>
+		                <td th:text="${entrada.dataEntrada}"></td>
+		                <td th:text="${entrada.valorTotal}"></td>
 		                <td>
-		                    <a th:href="@{/editarCidade/{id}(id=${cidade.id})}"><i class="fa-regular fa-pen-to-square" style="color: rgb(0, 0, 255);"></i></a> |
-		                    <a th:href="@{/removerCidade/{id}(id=${cidade.id})}"><i class="fa-solid fa-trash" style="color: rgb(255, 0, 0);"></i></a>
+		                    <a th:href="@{/editarEntrada/{id}(id=${entrada.id})}"><i class="fa-regular fa-pen-to-square" style="color: rgb(0, 0, 255);"></i></a> |
+		                    <a th:href="@{/removerEntrada/{id}(id=${entrada.id})}"><i class="fa-solid fa-trash" style="color: rgb(255, 0, 0);"></i></a>
 		                </td>
 		            </tr>
 		        </tbody>
@@ -74,7 +76,7 @@ xmlns:layut="http://www.ultraq.net.nz/thmeLeaf/Layout">
 		    </table>
 			
 			
-            <a href="/cadastroCidade"  class="btn btn-primary"> <i class="fa-solid fa-plus"></i> Cadastrar</button> </a>
+            <a href="/cadastroEntrada"  class="btn btn-primary"> <i class="fa-solid fa-plus"></i> Cadastrar</button> </a>
 			<a href="/administrativo"  class="btn btn-danger"> <i class="fa-solid fa-share"></i> Voltar</button> </a>
         
     </div>

@@ -17,11 +17,11 @@ public class Produto  implements Serializable {
 	private String nome;
 	private String codigoBarras;
 	private String unidadeMedida;
-	private double estoque;
-	private double precoCusto;
-	private double precoVenda;
-	private double lucro;
-	private double margemLucro;
+	private double estoque = 0.00;
+	private double precoCusto = 0.00;
+	private double precoVenda = 0.00;
+	private double lucro = 0.00;
+	private double margemLucro = 0.00;
 	
 
 	public long getId() {

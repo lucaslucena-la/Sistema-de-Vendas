@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.projeto.sistema.modelos.Entrada;
 import com.projeto.sistema.modelos.ItemEntrada;
+import com.projeto.sistema.modelos.Produto;
 import com.projeto.sistema.repositorios.EntradaRepositorio;
 import com.projeto.sistema.repositorios.FornecedorRepositorio;
 import com.projeto.sistema.repositorios.FuncionarioRepositorio;
@@ -22,6 +23,8 @@ import com.projeto.sistema.repositorios.ProdutoRepositorio;
 
 @Controller
 public class EntradaControle {
+
+    private final FuncionarioControle funcionarioControle;
 
 	
 	@Autowired
@@ -40,6 +43,10 @@ public class EntradaControle {
 	private FornecedorRepositorio fornecedorRepositorio;
 	
 	private List<ItemEntrada> listaItemEntrada = new ArrayList<ItemEntrada>();
+
+    EntradaControle(FuncionarioControle funcionarioControle) {
+        this.funcionarioControle = funcionarioControle;
+    }
 	
 	@GetMapping("/cadastroEntrada")//obter o mapeamento
 	public ModelAndView cadastrar(Entrada entrada, ItemEntrada itemEntrada) {
@@ -49,7 +56,7 @@ public class EntradaControle {
 		mv.addObject("listaItemEntrada", this.listaItemEntrada);
 		mv.addObject("listaFuncionarios", funcionarioRepositorio.findAll());
 		mv.addObject("listaFornecedores", fornecedorRepositorio.findAll());
-		mv.addObject("listaPodutos", produtoRepositorio.findAll());
+		mv.addObject("listaProdutos", produtoRepositorio.findAll());
 		
 		return mv;
 	}
@@ -61,34 +68,66 @@ public class EntradaControle {
 		return mv;
 	}
 	
-//	@GetMapping("/removerEntrada/{id}")
-//    public ModelAndView remover(@PathVariable("id") Long id) {
-//        entradaRepositorio.deleteById(id);
-//        return listar();
-//    }
+	@GetMapping("/removerEntrada/{id}")
+    public ModelAndView remover(@PathVariable("id") Long id) {
+        entradaRepositorio.deleteById(id);
+        return listar();
+    }
 	
-//	@GetMapping("/editarEntrada/{id}")
-//	public ModelAndView editar(@PathVariable("id") Long id) {
-//		Optional<Entrada> entrada = entradaRepositorio.findById(id);
-//		return cadastrar(entrada.get());
-//	}
-//	
+	@GetMapping("/editarEntrada/{id}")
+	public ModelAndView editar(@PathVariable("id") Long id) {
+		Optional<Entrada> entrada = entradaRepositorio.findById(id);
+		
+		this.listaItemEntrada = itemEntradaRepositorio.buscarPorEntrada(id);
+
+		return cadastrar(entrada.get(), new ItemEntrada());
+	}
+	
 	@PostMapping("/salvarEntrada")
-	public ModelAndView salvar(Entrada entrada, ItemEntrada itemEntrada, BindingResult result) {
-		if(result.hasErrors()) {
+	public ModelAndView salvar(String acao, Entrada entrada, ItemEntrada itemEntrada, BindingResult result) {
+		if (result.hasErrors()) {
 			return cadastrar(entrada, itemEntrada);
 		}
-		entradaRepositorio.saveAndFlush(entrada);
+
+		if (acao.equals("itens")) {
+			this.listaItemEntrada.add(itemEntrada);
+			entrada.setValorTotal(entrada.getValorTotal() + (itemEntrada.getValor() * itemEntrada.getQuantidade()));
+			entrada.setQuantidadeTotal(entrada.getQuantidadeTotal() + itemEntrada.getQuantidade());
+
+			// Continua na mesma tela com os itens adicionados
+			return cadastrar(entrada, new ItemEntrada());
+		}
+
+		else if (acao.equals("salvar")) {
+			// Salva entrada principal
+			entradaRepositorio.saveAndFlush(entrada);
+
+			// Salva todos os itens da entrada
+			for (ItemEntrada it : listaItemEntrada) {
+				it.setEntrada(entrada); // define a chave estrangeira
+				itemEntradaRepositorio.saveAndFlush(it);
+				// Atualiza o estoque do produto
+				Optional<Produto> prod = produtoRepositorio.findById(it.getProduto().getId());
+				if (prod.isPresent()) {
+					Produto produto = prod.get();
+					produto.setEstoque(produto.getEstoque() + it.getQuantidade());
+					produto.setPrecoVenda(it.getValor());
+					produto.setPrecoCusto(it.getValorCusto());
+					produtoRepositorio.saveAndFlush(produto);
+				}
+			}
+
+			// Limpa lista para próxima entrada
+			this.listaItemEntrada = new ArrayList<>();
+
+			// Redireciona para nova entrada
+			return cadastrar(new Entrada(), new ItemEntrada());
+		}
+
+		// Fallback
 		return cadastrar(new Entrada(), new ItemEntrada());
 	}
 
-	public List<ItemEntrada> getListaItemEntrada() {
-		return listaItemEntrada;
-	}
-
-	public void setListaItemEntrada(List<ItemEntrada> listaItemEntrada) {
-		this.listaItemEntrada = listaItemEntrada;
-	}
 	
 	
 }
