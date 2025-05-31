@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Cadastro de Entrada</title>
+  <title>Cadastro de Venda</title>
 
   <!-- CSS Bootstrap e FontAwesome -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -41,11 +41,11 @@
       </div>
       </nav>
   <div class="container mt-4">
-    <h4 class="mb-4">Cadastro de Entrada</h4>
+    <h4 class="mb-4">Cadastro de Venda</h4>
 
-    <form th:action="@{/salvarEntrada}" th:object="${entrada}" method="post">
+    <form th:action="@{/salvarVenda}" th:object="${venda}" method="post">
 
-      <div class="form-group" th:object="${itemEntrada}">
+      <div class="form-group" th:object="${itemVenda}">
         <div class="row">
           <div class="col-md-6">
             <label>Produto:</label>
@@ -59,15 +59,7 @@
             <input type="text" class="form-control" th:field="*{quantidade}">
           </div>
 
-          <div class="col">
-            <label>Valor de Custo:</label>
-            <input type="text" class="form-control" th:field="*{valorCusto}">
-          </div>
-
-          <div class="col">
-            <label>Valor de Venda:</label>
-            <input type="text" class="form-control" th:field="*{valor}">
-          </div>
+      
 
           <div class="col d-flex align-items-end">
             <button type="submit" name="acao" th:value="itens" class="btn btn-primary btn-block">
@@ -92,13 +84,13 @@
 			        <option th:each="est : ${listaFuncionarios}" th:value="${est.id}" th:text="${est.nome}"></option>
 			      </select>
 			
-			      <label>Fornecedor:</label>
-			      <select th:field="*{fornecedor}" class="form-control">
-			        <option th:each="est : ${listaFornecedores}" th:value="${est.id}" th:text="${est.nome}"></option>
+			      <label>Cliente:</label>
+			      <select th:field="*{cliente}" class="form-control">
+			        <option th:each="est : ${listaClientes}" th:value="${est.id}" th:text="${est.nome}"></option>
 			      </select>
 			
-			      <label>Valor Total:</label>
-			      <input type="text" readonly class="form-control" th:field="*{valorTotal}">
+			     <!-- <label>Valor Total:</label>
+			      <input type="text" readonly class="form-control" th:field="*{valorTotal}">-->
 			
 			      <label>Quantidade Total:</label>
 			      <input type="text" readonly class="form-control" th:field="*{quantidadeTotal}">
@@ -108,7 +100,7 @@
 			          <button type="submit" name="acao" th:value="salvar" class="btn btn-primary">
 			            <i class="fa fa-save"></i> Salvar
 			          </button>
-			          <a href="/listarEntrada" class="btn btn-success">
+			          <a href="/listarVenda" class="btn btn-success">
 			            <i class="fa fa-list"></i> Listar
 			          </a>
 			          <a href="/administrativo" class="btn btn-danger">
@@ -124,21 +116,21 @@
                 <th>ID</th>
                 <th>Produto</th>
                 <th>Quantidade</th>
-                <th>Valor Custo</th>
-                <th>Valor Venda</th>
+                <th>Valor Unitário</th>
+                <th>SubTotal</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody>
-              <tr th:each="itemEntrada : ${listaItemEntrada}">
-                <td th:text="${itemEntrada.id}"></td>
-                <td th:text="${itemEntrada.produto.nome}"></td>
-                <td th:text="${itemEntrada.quantidade}"></td>
-                <td th:text="${itemEntrada.valorCusto}"></td>
-                <td th:text="${itemEntrada.valor}"></td>
+              <tr th:each="itemVenda : ${listaItemVenda}">
+                <td th:text="${itemVenda.id}"></td>
+                <td th:text="${itemVenda.produto.nome}"></td>
+                <td th:text="${itemVenda.quantidade}"></td>
+                <td th:text="${itemVenda.valor}"></td>
+                <td th:text="${itemVenda.subTotal}"></td>
                 <td>
            
-                  <a th:href="@{/removerEntrada/{id}(id=${itemEntrada.id})}" class="text-danger">
+                  <a th:href="@{/removerVenda/{id}(id=${itemVenda.id})}" class="text-danger">
                     <i class="fa-solid fa-trash"></i>
                   </a>
                 </td>

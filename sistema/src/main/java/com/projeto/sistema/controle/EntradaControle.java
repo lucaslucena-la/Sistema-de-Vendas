@@ -16,7 +16,7 @@ import com.projeto.sistema.modelos.Entrada;
 import com.projeto.sistema.modelos.ItemEntrada;
 import com.projeto.sistema.modelos.Produto;
 import com.projeto.sistema.repositorios.EntradaRepositorio;
-import com.projeto.sistema.repositorios.FornecedorRepositorio;
+import com.projeto.sistema.repositorios.ClienteRepositorio;
 import com.projeto.sistema.repositorios.FuncionarioRepositorio;
 import com.projeto.sistema.repositorios.ItemEntradaRepositorio;
 import com.projeto.sistema.repositorios.ProdutoRepositorio;
@@ -40,7 +40,7 @@ public class EntradaControle {
 	private FuncionarioRepositorio funcionarioRepositorio;
 	
 	@Autowired
-	private FornecedorRepositorio fornecedorRepositorio;
+	private ClienteRepositorio clienteRepositorio;
 	
 	private List<ItemEntrada> listaItemEntrada = new ArrayList<ItemEntrada>();
 
@@ -55,7 +55,7 @@ public class EntradaControle {
 		mv.addObject("itemEntrada", itemEntrada);
 		mv.addObject("listaItemEntrada", this.listaItemEntrada);
 		mv.addObject("listaFuncionarios", funcionarioRepositorio.findAll());
-		mv.addObject("listaFornecedores", fornecedorRepositorio.findAll());
+		mv.addObject("listaClientees", clienteRepositorio.findAll());
 		mv.addObject("listaProdutos", produtoRepositorio.findAll());
 		
 		return mv;
